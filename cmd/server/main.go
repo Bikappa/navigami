@@ -112,7 +112,7 @@ func main() {
 	}))
 
 	srv := http.Server{
-		Addr:        "0.0.0.0:3000",
+		Addr:        "0.0.0.0:10000",
 		Handler:     handler,
 		IdleTimeout: time.Second * 10,
 	}
