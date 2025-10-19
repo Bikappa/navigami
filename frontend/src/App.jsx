@@ -51,6 +51,8 @@ function Portal() {
     return new URL(`/join?session=${sessionId}`, document.baseURI).href
   }, [sessionId])
 
+  console.log({ joinURL, u: document.baseURI })
+
   useEffect(() => {
     if (!joinURL) {
       return
