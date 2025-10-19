@@ -56,7 +56,6 @@ function Portal() {
     if (!joinURL) {
       return
     }
-    console.log("ciao", { joinURL })
 
     QRCode.toDataURL(joinURL).then(setImageData)
   }, [sessionId])
@@ -81,7 +80,7 @@ function Portal() {
   }, 3000)
 
   if (!sessionId) {
-    return <></>
+    return <>Loading ...</>
   }
 
   return <div>
@@ -116,14 +115,13 @@ function Join() {
     return <>Invalid session id</>
   }
 
-  console.log(gotoURL)
   return <>
     <form onSubmit={submitHandler}>
-      <input onChange={(e) => {
+      <input className="rounded-s-2xl p-2 border border-sky-300" onChange={(e) => {
         e.preventDefault()
         setGotoUrl(e.target.value)
       }} type="text" placeholder="type your url here" />
-      <input type="submit" value="submit" />
+      <input type="submit" className="text-white capitalize bg-sky-300 p-2 rounded-e-2xl border border-sky-300 cursor-pointer hover:bg-sky-500" value=" submit" />
     </form>
   </>
 }
@@ -131,9 +129,9 @@ function Join() {
 function App() {
 
   const windowLocationHref = new URL(window.location.href)
-  return <>
+  return <div className="flex items-center justify-center w-full h-screen">
     {windowLocationHref.pathname === '/join' ? <Join /> : <Portal />}
-  </>
+  </div>
 }
 
 export default App
