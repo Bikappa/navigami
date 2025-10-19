@@ -47,7 +47,10 @@ function Portal() {
 
   }, [sessionId])
 
-  const joinURL = useMemo(() => `/join?session=${sessionId}`.toString(), [sessionId])
+  const joinURL = useMemo(() => {
+    return new URL(`/join?session=${sessionId}`, document.baseURI).href
+  }, [sessionId])
+
   useEffect(() => {
     if (!joinURL) {
       return
@@ -62,14 +65,12 @@ function Portal() {
     }
     apiRequest(`/session?session=${sessionId}`.toString()).then((res) => {
       if (!res.ok) {
-        console.log(res.status, res.body)
         return
       }
 
       return res.text()
 
     }).then((gotoURL) => {
-      console.log(gotoURL);
       if (!gotoURL) {
         return
       }
