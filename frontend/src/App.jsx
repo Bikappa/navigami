@@ -83,11 +83,11 @@ function Portal() {
     return <>Loading ...</>
   }
 
-  return <div>
-    <div>
-      {imageData && <img src={imageData} />}
+  return <div className="flex gap-2 items-center">
+    <div className="md:size-[25vw] size-[40vw]">
+      {imageData && <img src={imageData} className="object-cover rounded-2-xl w-full h-full" />}
     </div>
-    <div>
+    <div className="text-3xl">
       <a href={joinURL} target="navigami-join">{sessionId.substring(0, 4)} - {sessionId.substring(4)} </a>
     </div>
   </div>
