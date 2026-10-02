@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"fmt"
 	"net/http"
 	"strings"
@@ -15,22 +16,16 @@ func main() {
 	cache := expirable.NewLRU[string, string](5, nil, time.Second*60)
 	apiMux := http.NewServeMux()
 
-	fileServer := http.FileServer(http.Dir("./frontend/dist"))
+	fileServer := http.FileServer(http.Dir("./html"))
 
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		accept := r.Header.Get("accept")
-		fmt.Println(r.URL.String(), r.Header.Get("accept"))
-		if accept != "application/json" {
-			if strings.Contains(accept, "text/html") {
-				r.URL.Path = "/"
-				r.URL.RawPath = "/"
-				fileServer.ServeHTTP(w, r)
-				return
-			}
+		if strings.Contains(accept, "text/html") {
 
 			fileServer.ServeHTTP(w, r)
 			return
 		}
+
 		apiMux.ServeHTTP(w, r)
 	})
 	apiMux.Handle("POST /session", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
